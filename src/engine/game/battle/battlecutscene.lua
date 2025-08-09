@@ -315,7 +315,7 @@ local function waitForEncounterText() return Game.battle.battle_ui.encounter_tex
 ---@overload fun(self: BattleCutscene, text: string, portrait: string, options?: table): finished: fun(): boolean
 ---@param text      string  The text to be typed.
 ---@param portrait? string  The character portrait to be used.
----@param actor?    Actor   The actor to use for voice bytes and dialogue portraits, overriding the active cutscene speaker.
+---@param actor?    string   The actor to use for voice bytes and dialogue portraits, overriding the active cutscene speaker.
 ---@param options?  table   A table defining additional properties to control the text.
 ---|"x"         # The x-offset of the dialgoue portrait.
 ---|"y"         # The y-offset of the dialogue portrait.
@@ -331,12 +331,10 @@ local function waitForEncounterText() return Game.battle.battle_ui.encounter_tex
 function BattleCutscene:text(text, portrait, actor, options)
     if type(actor) == "table" then
         options = actor
-        ---@diagnostic disable-next-line: cast-local-type
         actor = nil
     end
     if type(portrait) == "table" then
         options = portrait
-        ---@diagnostic disable-next-line: cast-local-type
         portrait = nil
     end
 
@@ -396,7 +394,7 @@ function BattleCutscene:text(text, portrait, actor, options)
 end
 
 --- Creates a text bubble for one or more battlers.
----@param battlers  string|Battler  A battler id, or a Battler instance. If multiple battlers share the same id, specifying one will create a bubble for each of them.
+---@param battlers  string|Battler|Battler[]  A battler id, or a Battler instance. If multiple battlers share the same id, specifying one will create a bubble for each of them.
 ---@param text      string          The text that will appear in the speech bubble.
 ---@param options?  table           A table defining additional properties to control the text.
 ---|"wait"          # Whether the cutscene should automatically suspend itself until the bubbles have finished. (Defaults to `true`)
